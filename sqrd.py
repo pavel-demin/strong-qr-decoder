@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import sys
@@ -45,7 +45,7 @@ alignment_pattern_array = [
 [6, 28, 54, 80, 106, 132, 158],
 [6, 32, 58, 84, 110, 136, 162],
 [6, 26, 54, 82, 110, 138, 166],
-[6, 30, 58, 86, 114, 142, 170]
+[6, 30, 58, 86, 114, 142, 170],
 ]
 
 #型番情報(version information)のテーブル(バージョン7以上)
@@ -83,7 +83,7 @@ version_information_table = [
 0x2542E,
 0x26A64,
 0x27541,
-0x28C69
+0x28C69,
 ]
 
 #形式情報(format information)のテーブル
@@ -119,7 +119,7 @@ format_information_table = [
 '111000010100110',
 '111010110010001',
 '111101011001000',
-'111111111111111'
+'111111111111111',
 ]
 
 #データコード語数テーブル(M(00), L(01), H(10), Q(11))
@@ -163,7 +163,7 @@ data_code_num_table = [
 [1992, 2566, 1096, 1426],
 [2102, 2702, 1142, 1502],
 [2216, 2812, 1222, 1582],
-[2334, 2956, 1276, 1666]
+[2334, 2956, 1276, 1666],
 ]
 
 #RSブロック数テーブル(M(00), L(01), H(10), Q(11))
@@ -207,7 +207,7 @@ RS_block_num_table = [
 [43, 21, 70, 59],
 [45, 22, 74, 62],
 [47, 24, 77, 65],
-[49, 25, 81, 68]
+[49, 25, 81, 68],
 ]
 
 #英数字モードのテーブル
@@ -243,7 +243,7 @@ def showData(data):
 	for y in range(len(data)):
 		for x in range(len(data)):
 			printModule(data[x][y])
-		print ''
+		print('')
 
 #位置検出パターン(finder pattern)が間違っていないかどうか
 def checkFinder(data, xoffset, yoffset):
@@ -345,7 +345,7 @@ def calcSyndrome(RS_block, index):
 	s = 0b00000000 #ベクトル表現
 	for i in range(len(RS_block)):
 		s ^= mulGF256(RS_block[i], index2vector(index * i))
-		#print index, bin(s)
+		#print(index, bin(s))
 	return s
 #GF(2^8)を成分に持つ行列A_ijの行列式
 def detGF256(A):
@@ -436,7 +436,7 @@ if __name__ == '__main__':
 		sys.exit(1)
 	version = (width - 21) // 4 + 1
 	if args.verbose:
-		print u'型番:\t{0} ({1} x {1})'.format(version, width)
+		print(u'型番:\t{0} ({1} x {1})'.format(version, width))
 	#2次元配列data[x][y]の作成
 	data = []
 	for i in range(width):
@@ -454,7 +454,7 @@ if __name__ == '__main__':
 				sys.exit(1)
 	#読み込んだデータの表示
 	if args.verbose:
-		print u'読み込んだデータ:'
+		print(u'読み込んだデータ:')
 		showData(data)
 
 	#--------------------------------固定パターンのチェック--------------------------------
@@ -464,12 +464,12 @@ if __name__ == '__main__':
 	else:
 		valid_finder_pattern = False
 	if args.verbose:
-		print ''
+		print('')
 		if valid_finder_pattern:
 			stdoutColor('[ OK ]', 'green')
 		else:
 			stdoutColor('[ NG ]', 'red')
-		print u' 位置検出パターン'
+		print(u' 位置検出パターン')
 	#分離パターン(separator)が間違っていないかどうか
 	valid_separator = True
 	for i in range(8):
@@ -480,7 +480,7 @@ if __name__ == '__main__':
 			stdoutColor('[ OK ]', 'green')
 		else:
 			stdoutColor('[ NG ]', 'red')
-		print u' 分離パターン'
+		print(u' 分離パターン')
 	#タイミングパターン(timing pattern)が間違っていないかどうか
 	valid_timing_pattern = True
 	for i in range(width - 16):
@@ -491,7 +491,7 @@ if __name__ == '__main__':
 			stdoutColor('[ OK ]', 'green')
 		else:
 			stdoutColor('[ NG ]', 'red')
-		print u' タイミングパターン'
+		print(u' タイミングパターン')
 	#位置合わせパターン(alignment pattern)が間違っていないかどうか
 	valid_alignment_pattern = True
 	array = alignment_pattern_array[version - 1]
@@ -511,7 +511,7 @@ if __name__ == '__main__':
 			stdoutColor('[ OK ]', 'green')
 		else:
 			stdoutColor('[ NG ]', 'red')
-		print u' 位置合わせパターン'
+		print(u' 位置合わせパターン')
 	#is_data_module[x][y]の作成
 	is_data_module = []
 	for x in range(width):
@@ -550,7 +550,7 @@ if __name__ == '__main__':
 					left_bottom += '?'
 		left_bottom = left_bottom[::-1]
 		if args.verbose:
-			print u'\n型番情報(左下):\t\t{0}'.format(left_bottom)
+			print(u'\n型番情報(左下):\t\t{0}'.format(left_bottom))
 		#右上の型番情報
 		right_top = ''
 		for j in range(6):
@@ -563,7 +563,7 @@ if __name__ == '__main__':
 					right_top += '?'
 		right_top = right_top[::-1]
 		if args.verbose:
-			print u'型番情報(右上):\t\t{0}'.format(right_top)
+			print(u'型番情報(右上):\t\t{0}'.format(right_top))
 		#2つの型番情報の合成
 		composed = ''
 		diff_format = False
@@ -584,8 +584,8 @@ if __name__ == '__main__':
 				stdoutColor('[ NG ]', 'red')
 			else:
 				stdoutColor('[ OK ]', 'green')
-			print u' 2つの型番情報の整合性'
-			print u'型番情報(合成):\t\t{0}'.format(composed)
+			print(u' 2つの型番情報の整合性')
+			print(u'型番情報(合成):\t\t{0}'.format(composed))
 		#誤り訂正
 		version_information = composed.replace('?', '0') #不明モジュールを0で埋める
 		min_hamming_distance = 18
@@ -597,14 +597,14 @@ if __name__ == '__main__':
 		if index == -1: #誤り訂正失敗
 			if args.verbose:
 				stdoutColor('[ NG ]', 'red')
-				print u' 型番情報の誤り訂正'
+				print(u' 型番情報の誤り訂正')
 		else:
 			if args.verbose:
 				stdoutColor('[ OK ]', 'green')
-				print u' 誤り訂正'
+				print(u' 誤り訂正')
 			version_information = '{0:018b}'.format(version_information_table[index])
 			if args.verbose:
-				print u'型番情報(誤り訂正後):\t{0}'.format(version_information)
+				print(u'型番情報(誤り訂正後):\t{0}'.format(version_information))
 
 	#--------------------------------形式情報のチェック--------------------------------
 	#常に暗であるモジュールが間違っていないかどうか
@@ -613,12 +613,12 @@ if __name__ == '__main__':
 	else:
 		valid_always_black = True
 	if args.verbose:
-		print ''
+		print('')
 		if valid_always_black:
 			stdoutColor('[ OK ]', 'green')
 		else:
 			stdoutColor('[ NG ]', 'red')
-		print u' 常暗モジュール'
+		print(u' 常暗モジュール')
 	#形式情報(format information)の取得
 	format_mask = '101010000010010'
 	#横方向の形式情報
@@ -646,7 +646,7 @@ if __name__ == '__main__':
 			elif data[width - 8 + i - 7][8] == 2:
 				yoko += '?'
 	if args.verbose:
-		print u'形式情報(横):\t\t\t{0}'.format(yoko)
+		print(u'形式情報(横):\t\t\t{0}'.format(yoko))
 	#縦方向の形式情報
 	tate = ''
 	for i in range(15):
@@ -672,7 +672,7 @@ if __name__ == '__main__':
 			elif data[8][5 - (i - 9)] == 2:
 				tate += '?'
 	if args.verbose:
-		print u'形式情報(縦):\t\t\t{0}'.format(tate)
+		print(u'形式情報(縦):\t\t\t{0}'.format(tate))
 	#縦横の形式情報の合成
 	composed = ''
 	diff_format = False
@@ -693,11 +693,11 @@ if __name__ == '__main__':
 			stdoutColor('[ NG ]', 'red')
 		else:
 			stdoutColor('[ OK ]', 'green')
-		print u' 縦横の形式情報の整合性'
-		print u'形式情報(合成):\t\t{0}'.format(composed)
+		print(u' 縦横の形式情報の整合性')
+		print(u'形式情報(合成):\t\t{0}'.format(composed))
 	composed_unmask = ''.join(['0' if x == y else '1' if x in '01' and y in '01' else '?' for (x, y) in zip(composed, format_mask)])
 	if args.verbose:
-		print u'形式情報(マスク解除):\t{0}'.format(composed_unmask)
+		print(u'形式情報(マスク解除):\t{0}'.format(composed_unmask))
 	#誤り訂正
 	format_information = composed_unmask.replace('?', '0') #不明モジュールを0で埋める
 	min_hamming_distance = 15
@@ -709,7 +709,7 @@ if __name__ == '__main__':
 	if index == -1: #誤り訂正失敗
 		if args.verbose:
 			stdoutColor('[ NG ]', 'red')
-			print u' 形式情報の誤り訂正'
+			print(u' 形式情報の誤り訂正')
 		if '?' in composed_unmask[:5] and not (args.error_correction != None and args.mask != None): #データ部が全て不明で、引数指定もなし
 			sys.stderr.write(u'error: 形式情報のデータ部が不明、かつ誤り訂正に失敗しました\n')
 			sys.exit(1)
@@ -724,10 +724,10 @@ if __name__ == '__main__':
 	else:
 		if args.verbose:
 			stdoutColor('[ OK ]', 'green')
-			print u' 誤り訂正'
+			print(u' 誤り訂正')
 		format_information = format_information_table[index]
 		if args.verbose:
-			print u'形式情報(誤り訂正後):\t{0}'.format(format_information)
+			print(u'形式情報(誤り訂正後):\t{0}'.format(format_information))
 	#誤り訂正レベル(error correction level)の取得
 	if args.error_correction != None:
 		error_correction_level = int(args.error_correction, 0)
@@ -742,7 +742,7 @@ if __name__ == '__main__':
 	if error_correction_level == 0b10:
 		m = 'H'
 	if args.verbose:
-		print u'\n誤り訂正レベル:\t{0:02b}\t({1})'.format(error_correction_level, m)
+		print(u'\n誤り訂正レベル:\t{0:02b}\t({1})'.format(error_correction_level, m))
 	#マスクパターン(mask pattern)の取得
 	if args.mask != None:
 		mask_pattern = int(args.mask, 0)
@@ -765,7 +765,7 @@ if __name__ == '__main__':
 			m = '((x * y) mod 2 + (x * y) mod 3) mod 2 = 0'
 		if mask_pattern == 7:
 			m = '((x * y) mod 3 + (x + y) mod 2) mod 2 = 0'
-		print u'マスクパターン:\t{0}\t[ {1} ]'.format(mask_pattern, m)
+		print(u'マスクパターン:\t{0}\t[ {1} ]'.format(mask_pattern, m))
 
 	#--------------------------------マスク解除--------------------------------
 	#マスク(mask)を解除
@@ -777,7 +777,7 @@ if __name__ == '__main__':
 				elif data[x][y] == 1:
 					data[x][y] = 0
 	if args.verbose:
-		print u'\nマスク解除後のデータ:'
+		print(u'\nマスク解除後のデータ:')
 		showData(data)
 
 	#--------------------------------コード語列読み込み--------------------------------
@@ -818,8 +818,8 @@ if __name__ == '__main__':
 					y += 1
 					x += 1
 	if args.verbose:
-		print u'\n総コード語数: {0}'.format(len(blocks))
-		print u'データブロック: {0}'.format(repr(blocks))
+		print(u'\n総コード語数: {0}'.format(len(blocks)))
+		print(u'データブロック: {0}'.format(repr(blocks)))
 	#RSブロックに分割する
 	RS_blocks = []
 	block_num = RS_block_num_table[version - 1][error_correction_level]
@@ -837,10 +837,10 @@ if __name__ == '__main__':
 		t.reverse()
 		RS_blocks.append(t)
 	if args.verbose:
-		print u'RSブロック数:\t{0}'.format(len(RS_blocks))
-		print u'RSブロック分割後:'
+		print(u'RSブロック数:\t{0}'.format(len(RS_blocks)))
+		print(u'RSブロック分割後:')
 		for i in range(len(RS_blocks)):
-			print '{0}'.format(repr(RS_blocks[i]))
+			print('{0}'.format(repr(RS_blocks[i])))
 	#不明モジュールを含むコードワードの数を数える
 	unknown_code_nums = []
 	for bs in RS_blocks:
@@ -850,7 +850,7 @@ if __name__ == '__main__':
 				s += 1
 		unknown_code_nums.append(s)
 	if args.verbose:
-		print u'各RSブロック中の不明データコード数: {0}'.format(repr(unknown_code_nums))
+		print(u'各RSブロック中の不明データコード数: {0}'.format(repr(unknown_code_nums)))
 	#不明モジュールを0で埋める
 	for i in range(block_num):
 		for j in range(len(RS_blocks[i])):
@@ -873,24 +873,24 @@ if __name__ == '__main__':
 	else:
 		limit_error_correction_num = (len(blocks) - offset) // block_num // 2
 	if args.verbose:
-		print u'\n(最大)誤り訂正数: {0}'.format(limit_error_correction_num)
+		print(u'\n(最大)誤り訂正数: {0}'.format(limit_error_correction_num))
 	for i in range(block_num): #各RSブロックについて個別に誤り訂正する
 		if args.verbose:
-			print u'\nRSブロック {0}'.format(i)
+			print(u'\nRSブロック {0}'.format(i))
 		#不明モジュール数が誤り訂正数を超えていた場合は訂正不能
 		if limit_error_correction_num < unknown_code_nums[i]:
 			if args.verbose:
-				print u'不明モジュールを含むブロック数が(最大)誤り訂正数を超えています'
+				print(u'不明モジュールを含むブロック数が(最大)誤り訂正数を超えています')
 			continue
 		#シンドロームの計算
 		syndrome_length = (len(blocks) - offset) // block_num #誤り訂正数、len(syndromes)
 		if args.verbose:
-			print u'シンドローム数:\t{0}'.format(syndrome_length)
+			print(u'シンドローム数:\t{0}'.format(syndrome_length))
 		syndromes = []
 		for j in range(syndrome_length):
 			syndromes.append(calcSyndrome(RS_blocks[i], j))
 		if args.verbose:
-			print u'シンドローム: {0}'.format(repr(map(hex, syndromes)))
+			print(u'シンドローム: {0}'.format(repr(list(map(hex, syndromes)))))
 		no_error = True
 		for j in range(syndrome_length):
 			if syndromes[j] != 0b00000000:
@@ -900,7 +900,7 @@ if __name__ == '__main__':
 				stdoutColor('[ N O ]', 'green')
 			else:
 				stdoutColor('[ YES ]', 'red')
-			print u' 誤り訂正の必要性'
+			print(u' 誤り訂正の必要性')
 		if no_error or args.no_correction: #誤りはない
 			continue #次のブロックへ
 		#誤りの個数の計算
@@ -917,7 +917,7 @@ if __name__ == '__main__':
 				break
 		num_error = len(A)
 		if args.verbose:
-			print u'誤り個数:\t{0}'.format(num_error)
+			print(u'誤り個数:\t{0}'.format(num_error))
 		#誤り位置変数\sigma_iの計算
 		A = []
 		for j in range(num_error):
@@ -928,7 +928,7 @@ if __name__ == '__main__':
 		sigmas = solveSE(A)
 		sigmas.reverse()
 		if args.verbose:
-			print u'誤り位置多項式の係数: {0}'.format(repr(sigmas))
+			print(u'誤り位置多項式の係数: {0}'.format(repr(sigmas)))
 		#誤り位置の計算
 		indexes = []
 		for j in range(len(RS_blocks[i])):
@@ -936,7 +936,7 @@ if __name__ == '__main__':
 			if s == 0b00000000:
 				indexes.append(j)
 		if args.verbose:
-			print u'誤り位置: {0}'.format(repr(indexes))
+			print(u'誤り位置: {0}'.format(repr(indexes)))
 		#誤りの大きさを求める
 		A = []
 		for j in range(len(indexes)):
@@ -947,13 +947,13 @@ if __name__ == '__main__':
 			A.append(row)
 		errors = solveSE(A)
 		if args.verbose:
-			print u'誤りの大きさ: {0}'.format(repr(map(lambda x: '{0:08b}'.format(x), errors)))
+			print(u'誤りの大きさ: {0}'.format(repr(list(map(lambda x: '{0:08b}'.format(x), errors)))))
 		#誤りを訂正する
 		for j in range(len(indexes)):
 			RS_blocks[i][indexes[j]] ^= errors[j]
 		if args.verbose:
-			print u'誤り訂正後のRSブロック: {0}'.format(repr(map(lambda x: '{0:08b}'.format(x), RS_blocks[i])))
-	map(lambda xs: xs.reverse(), RS_blocks)
+			print(u'誤り訂正後のRSブロック: {0}'.format(repr(list(map(lambda x: '{0:08b}'.format(x), RS_blocks[i])))))
+	list(map(lambda xs: xs.reverse(), RS_blocks))
 
 	#--------------------------------データ読み出し--------------------------------
 	#最終的なデータバイト列の取り出し
@@ -961,12 +961,12 @@ if __name__ == '__main__':
 	for i in range(len(RS_blocks)):
 		data_bytes.extend(RS_blocks[i][:offset // block_num + (1 if (block_num - (offset % block_num)) <= i else 0)])
 	if args.verbose:
-		print u'\n最終的なデータバイト列: {0} ({1}バイト)'.format(repr(map(hex, data_bytes)), len(data_bytes))
+		print(u'\n最終的なデータバイト列: {0} ({1}バイト)'.format(repr(list(map(hex, data_bytes))), len(data_bytes)))
 	data_bits = ''
 	for block in data_bytes:
 		data_bits += '{0:08b}'.format(block)
 	if args.verbose:
-		print u'最終的なデータビット列: {0}'.format(data_bits)
+		print(u'最終的なデータビット列: {0}'.format(data_bits))
 	#データを読み終えるまで繰り返し
 	data = []
 	while len(data_bits) != 0:
@@ -990,7 +990,7 @@ if __name__ == '__main__':
 			sys.stderr.write(u'error: 未対応のモード指示子です\n')
 			sys.exit(1)
 		if args.verbose:
-			print u'\nモード指示子:\t{0} ({1})'.format('{0:04b}'.format(mode), m)
+			print(u'\nモード指示子:\t{0} ({1})'.format('{0:04b}'.format(mode), m))
 		data_bits = data_bits[4:]
 		#数字のとき
 		if mode == 0b0001:
@@ -1004,28 +1004,29 @@ if __name__ == '__main__':
 			length = int(data_bits[:length_indicator_length], 2)
 			data_bits = data_bits[length_indicator_length:]
 			if args.verbose:
-				print u'文字数:\t{0}'.format(length)
+				print(u'文字数:\t{0}'.format(length))
 			#データを読む
 			for i in range((length + 2) // 3):
 				if i == (length + 2) // 3 - 1: #最後の1または2けた
 					if length % 3 == 0:
 						num = int(data_bits[:10], 2)
 						data_bits = data_bits[10:]
-						data.extend(map(ord, '{0:03d}'.format(num)))
+						data.extend(list(map(ord, '{0:03d}'.format(num))))
 					elif length % 3 == 1:
 						num = int(data_bits[:4], 2)
 						data_bits = data_bits[4:]
-						data.extend(map(ord, '{0:01d}'.format(num)))
+						data.extend(list(map(ord, '{0:01d}'.format(num))))
 					else:
 						num = int(data_bits[:7], 2)
 						data_bits = data_bits[7:]
-						data.extend(map(ord, '{0:02d}'.format(num)))
+						data.extend(list(map(ord, '{0:02d}'.format(num))))
 				else:
+					print(data_bits[:10])
 					num = int(data_bits[:10], 2)
 					data_bits = data_bits[10:]
-					data.extend(map(ord, str(num)))
+					data.extend(list(map(ord, str(num))))
 			if args.verbose:
-				print u'デコードされたデータ: {0}'.format(repr(map(hex, data)))
+				print(u'デコードされたデータ: {0}'.format(repr(list(map(hex, data)))))
 		#英数字のとき
 		if mode == 0b0010:
 			#文字数指示子を取得
@@ -1038,12 +1039,15 @@ if __name__ == '__main__':
 			length = int(data_bits[:length_indicator_length], 2)
 			data_bits = data_bits[length_indicator_length:]
 			if args.verbose:
-				print u'文字数:\t{0}'.format(length)
+				print(u'文字数:\t{0}'.format(length))
 			#データを読む
 			for i in range((length + 1) // 2):
 				if i == (length + 1) // 2 - 1: #最後の1または2けた
 					if length % 2 == 0:
-						num = int(data_bits[:11], 2)
+						if data_bits[:11]=='':
+						    break
+						else:
+						    num = int(data_bits[:11], 2)
 						data_bits = data_bits[11:]
 						data.extend([ord(alphanumeric_table[num // 45]), ord(alphanumeric_table[num % 45])])
 					else:
@@ -1051,11 +1055,14 @@ if __name__ == '__main__':
 						data_bits = data_bits[6:]
 						data.extend([ord(alphanumeric_table[num])])
 				else:
-					num = int(data_bits[:11], 2)
-					data_bits = data_bits[11:]
-					data.extend([ord(alphanumeric_table[num // 45]), ord(alphanumeric_table[num % 45])])
+					if data_bits[:11]=='':
+					    break
+					else:
+					    num = int(data_bits[:11], 2)
+					    data_bits = data_bits[11:]
+					    data.extend([ord(alphanumeric_table[num // 45]), ord(alphanumeric_table[num % 45])])
 			if args.verbose:
-				print u'デコードされたデータ: {0}'.format(repr(map(hex, data)))
+				print(u'デコードされたデータ: {0}'.format(repr(list(map(hex, data)))))
 		#8ビットバイトのとき
 		if mode == 0b0100:
 			#文字数指示子を取得
@@ -1066,21 +1073,21 @@ if __name__ == '__main__':
 			length = int(data_bits[:length_indicator_length], 2)
 			data_bits = data_bits[length_indicator_length:]
 			if args.verbose:
-				print u'文字数:\t{0}'.format(length)
+				print(u'文字数:\t{0}'.format(length))
 			#データを読む
 			for i in range(length):
 				data.append(int(data_bits[:8], 2))
 				data_bits = data_bits[8:]
 			if args.verbose:
-				print u'デコードされたデータ: {0}'.format(repr(map(hex, data)))
+				print(u'デコードされたデータ: {0}'.format(repr(list(map(hex, data)))))
 		#終端パターンのとき
 		if mode == 0b0000:
 			break
 		if args.verbose:
-			print '残りのビット列: {0}'.format(data_bits)
-			print 'デコード済み文字列: {0}'.format(''.join(map(chr, data)))
+			print('残りのビット列: {0}'.format(data_bits))
+			print('デコード済み文字列: {0}'.format(''.join(list(map(chr, data)))))
 	if args.verbose:
-		print ''
-	print ''.join(map(chr, data))
+		print('')
+	print(''.join(list(map(chr, data))))
 	
 
