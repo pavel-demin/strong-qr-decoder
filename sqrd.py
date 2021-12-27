@@ -1106,6 +1106,7 @@ if __name__ == "__main__":
                 length_indicator_length = 16
             length = int(data_bits[:length_indicator_length], 2)
             data_bits = data_bits[length_indicator_length:]
+            length = min(length, len(data_bits) // 8)
             if args.verbose:
                 print(u"number of characters:\t{0:4}".format(length))
             # Read the data
