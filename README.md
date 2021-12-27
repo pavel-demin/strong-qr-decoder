@@ -1,49 +1,50 @@
 strong-qr-decoder
 =================
 
-強力なQRコードデコーダ
+Strong QR code decoder
 
-特徴
-====
+Features
+========
 
-- 誤り訂正に失敗しても無理やりデータ部分を読み出します
-- 形式情報をの読み出しに失敗しても、エラー訂正レベルやマスクパターンを自分で設定できます
-- `--verbose`オプションを使うとわりと詳細な出力が得られます
+- If the error correction fails, the data portion is forcibly read.
+- The error correction level and mask pattern can be specified manually.
+- The `--verbose` option gives detailed output.
 
-ヘルプ
-======
+Usage
+=====
 
 ```
-% ./sqrt.py --help
+% ./sqrd.py --help
 usage: sqrd.py [-h] [-e ERROR_CORRECTION] [-m MASK] [-n] [-v] [FILE]
 
 sqrd - Strong QR Decoder
 
 positional arguments:
-  FILE                  入力ファイル(デフォルトは標準入力)
+  FILE                  input file (default is standard input)
 
 optional arguments:
   -h, --help            show this help message and exit
   -e ERROR_CORRECTION, --error-correction ERROR_CORRECTION
-                        エラー訂正レベル(1:L 0:M 3:Q 2:H)
-  -m MASK, --mask MASK  マスクパターン(0〜7)
-  -n, --no-correction   データブロックの誤り訂正をしない
-  -v, --verbose         詳細な情報を表示
+                        error correction level (1: L 0: M 3: Q 2: H)
+  -m MASK, --mask MASK  mask pattern (0-7)
+  -n, --no-correction   do not correct data blocks
+  -v, --verbose         show more information
 ```
 
-使い方
-======
+How to use
+==========
 
-QRコードをテキストデータで流し込みます。
+Insert the QR code as text data.
 
-- `'X', 'x', 'O', 'o', '#', '1'`は暗モジュールとして扱われます。
-- `'_', '-', ' ', '0'`は明モジュールとして扱われます。
-- `'?'`は明暗が不明であるモジュールとして扱われます(マスク解除後に明モジュール扱いになります)
+- `'X', 'x', 'O', 'o', '#', '1'` are treated as dark modules.
+- `'_', '-', ' ', '0'` are treated as light modules.
+- `'?'` is treated as an unknown module (it will be treated as a light module after unmasking).
 
-例
-==
 
-以下のデータを`qr.txt`として保存します。
+Example
+=======
+
+Save the following data as `qr.txt`.
 ```
 XXXXXXX_X_XX_X____XXXXXXX
 X_____X_XXX_XXX_X_X_____X
@@ -71,8 +72,9 @@ X_XXX_X_X__X_X_X__XX____X
 X_____X___X_XX_X_X_XX___X
 XXXXXXX____X__X_X__XX__XX
 ```
-実行するとデコード結果が表示されます。
+
+When executed, the decoding result will be displayed.
 ```
-% ./sqrd qr.txt
+% ./sqrd.py qr.txt
 sample_data
 ```
