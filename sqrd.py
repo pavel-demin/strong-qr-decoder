@@ -1097,7 +1097,7 @@ if __name__ == "__main__":
                         data.extend([ord(alphanumeric_table[num // 45]), ord(alphanumeric_table[num % 45])])
             if args.verbose:
                 print(u"decoded data:", repr(list(map("{0:#04x}".format, data))))
-        # 8 Bit bytes
+        # 8-bit bytes
         if mode == 0b0100:
             # Get character count specifier
             if version <= 9:
